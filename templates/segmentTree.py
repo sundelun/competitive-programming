@@ -1,3 +1,4 @@
+#代码来自0x3f，灵茶山艾府
 class FenwickTree:
     def __init__(self, n: int) -> None:
         self.n = n
