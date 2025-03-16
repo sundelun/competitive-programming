@@ -31,43 +31,26 @@ class FenwickTree:
             i -= i & -i
         return s
 """
+@cache
+def calc(x: int, a: int, b: int) -> int:
+    if x == 0: return 0
+    if a == 0 and b == 0: return x
+    if x == 1: return 0 if a > 0 else 1
+    if x & 1 == 0:
+        return max((calc(x >> 1, a - 1, b) if a > 0 else -math.inf), ((calc(x >> 1, a, b - 1) if b > 0 else -math.inf)))
+    return max((calc(x >> 1, a - 1, b) if a > 0 else -math.inf), ((calc((x + 1) >> 1, a, b - 1) if b > 0 else -math.inf)))
+@cache
+def calc2(x: int, a: int, b: int) -> int:
+    if x == 0: return 0
+    if a == 0 and b == 0: return x
+    if x == 1: return 0 if a > 0 else 1
+    if x & 1 == 0:
+        return min((calc2(x >> 1, a - 1, b) if a > 0 else math.inf), ((calc2(x >> 1, a, b - 1) if b > 0 else math.inf)))
+    return min((calc2(x >> 1, a - 1, b) if a > 0 else math.inf), ((calc2((x + 1) >> 1, a, b - 1) if b > 0 else math.inf)))
 def solve():
-    x2, n2, m2 = map(int, input().split())
-    n, m = n2, m2
-    x = x2
-    while x > 1:
-        if n == 0 and m == 0: break
-        if x & 1:
-            if m: 
-                x >>= 1
-                x += 1
-                m -= 1
-            else:
-                x >>= 1
-                n -= 1
-        else:
-            x >>= 1
-            if n: n -= 1
-            else: m -= 1
-    if n and x == 1: x = 0
-    #rint(x)
-    x1 = x2
-    n1, m1 = n2, m2
-    while x1:
-        if n1 == 0 and m1 == 0: break
-        if x1 & 1 == 0:
-            x1 >>= 1
-            if m1: 
-                m1 -= 1
-            else:
-                n1 -= 1
-        else:
-            x1 >>= 1
-            if n1: 
-                n1 -= 1
-            else:
-                m1 -= 1
-                x1 += 1
-    print(x1, x)
+    x, m, n = map(int, input().split())
+    # 3 1 2
+    # big: 3 -> 2 -> 1 -> 1
+    print(calc2(x, m, n), calc(x, m, n))
 for _ in range(int(input())):
     solve()
