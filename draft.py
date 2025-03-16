@@ -5,8 +5,6 @@ import heapq
 from collections import Counter, defaultdict
 from functools import cache
 from typing import List
-import pandas as pd
-import matplotlib.pyplot as plt
 import sys
 
 class SegmentTree:
