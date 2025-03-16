@@ -1,5 +1,7 @@
 #https://leetcode.cn/problems/substring-with-largest-variance/description/
 import math
+# Time complexity: O(N*26^2)
+# Space complexity: O(1)
 class Solution:
     def largestVariance(self, s: str) -> int:
         # aabaaab
@@ -26,4 +28,30 @@ class Solution:
                         f0, f1 = max(f0 - 1, -1), max(f0 - 1, f1 - 1, -1)
                     ans = max(ans, f1)
         return ans
+# Optimize time complexity version
+# Notice that the status of dp won't be updated if we do not meet ch == f or ch == s2
+# So we are wasting lots of time during the computation from previous method
+# we can create two 26 * 26 matrix f0[a][b] and f1[a][b]
+class Solution2:
+    def largestVariance(self, s: str) -> int:
+        # aabaaab
+        # if we only have two distinct characters, then the problem becomes the
+        # maxmium subarray problem with a = 1 and b = -1
+        f0 = [[0] * 26 for _ in range(26)]
+        f1 = [[-math.inf] * 26 for _ in range(26)]
+        ans = 0
+        for ch in map(ord, s):
+            ch -= ord('a')
+            # we only need to calculate when a = ch or b = ch
+            for i in range(26):
+                if i == ch: continue
+                # ch = a
+                f0[ch][i] = max(f0[ch][i], 0) + 1 # same as max(f0[ch][i] + 1, 1)
+                f1[ch][i] = f1[ch][i] + 1
+
+                # ch = b
+                #f0[i][ch], f1[i][ch] = max(f0[i][ch], 0) - 1, max(f0[i][ch], f1[i][ch], 0) - 1
+                f1[i][ch] = f0[i][ch] = max(f0[i][ch], 0) - 1
+                ans = max(ans, f1[i][ch], f1[ch][i])
+        return ans  
                     
