@@ -36,9 +36,19 @@ def solve():
     n, m = map(int, input().split())
     arr = [int(x) for x in input().split()]
     arr.sort()
+    # [2, 4]
+    # left = 1, right = 4
+    # cntleft = 2, cntright = 1
     ans = 0
-    for i in range(m):
-        ans += arr[i] * (m - i - 1)
-    print(ans * 2)
+    for left in range(1, n):
+        right = n - left
+        cntleft = bisect.bisect_left(arr, left)
+        cntright = bisect.bisect_left(arr, right)
+        cntleft = m - cntleft
+        cntright = m - cntright
+        if cntleft == 0 or cntright == 0: continue
+        mx = min(cntleft, cntright)
+        ans += (cntleft * cntright) - mx
+    print(ans)
 for _ in range(int(input())):
     solve()
