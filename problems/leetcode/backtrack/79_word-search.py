@@ -1,3 +1,4 @@
+# https://leetcode.cn/problems/word-search/description/
 from typing import List
 from collections import Counter
 DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
