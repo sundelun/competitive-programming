@@ -33,22 +33,25 @@ class FenwickTree:
 """
  
 def solve():
-    n, m = map(int, input().split())
-    arr = [int(x) for x in input().split()]
-    arr.sort()
-    # [2, 4]
-    # left = 1, right = 4
-    # cntleft = 2, cntright = 1
-    ans = 0
-    for left in range(1, n):
-        right = n - left
-        cntleft = bisect.bisect_left(arr, left)
-        cntright = bisect.bisect_left(arr, right)
-        cntleft = m - cntleft
-        cntright = m - cntright
-        if cntleft == 0 or cntright == 0: continue
-        mx = min(cntleft, cntright)
-        ans += (cntleft * cntright) - mx
-    print(ans)
+    n = int(input())
+    record = []
+    cnt = [0] * (2 * n + 1)
+    cnt2 = [0] * (2 * n + 1)
+    for _ in range(n):
+        l, r = map(int, input().split())
+        record.append([l, r])
+        if l == r: 
+            cnt[l] = 1
+            cnt2[l] += 1
+    ans = []
+    prefix = list(accumulate(cnt, initial = 0))
+    for x, y in record:
+        if x == y:
+            if cnt2[x] > 1: ans.append('0')
+            else: ans.append('1')
+        else:
+            if prefix[y + 1] - prefix[x] == y - x + 1: ans.append('0')
+            else: ans.append('1')
+    print(''.join(ans))
 for _ in range(int(input())):
     solve()
