@@ -95,3 +95,41 @@ if __name__ == "__main__":
     #
     # This solve() function will parse the input, compute, and print the result.
     solve()
+def solve():
+    n, q = map(int, input().split())
+    a = [int(x) for x in input().split()]
+    b = [int(x) for x in input().split()]
+    mod = 998244353
+    # a = [1, 4] and b = [2, 3] then the max of min is 1 * 3 = 3
+    # greedy approach: the optimal answer is sort a and sort b and simulate will give the answer!
+    a.sort()
+    b.sort()
+    res = 1
+    for i in range(n):
+        res = ((res % mod )* (min(a[i], b[i])) % mod) % mod
+    ans = [res]
+    # [4, 5, 6] and a[0] += 1
+    # [1, 1, 1] original res = 1
+    # after b[0] += 1, it becomes 2
+    for _ in range(q):
+        o, x = map(int, input().split())
+        original = min(a[x - 1], b[x - 1])
+        # a * (b + 1) = a * b + a
+        # b = original, a = updated res
+        res //= original
+        if o == 1:
+            if a[x - 1] < b[x - 1]:
+                res = res * (original + 1)
+            else:
+                res *= original
+            a[x - 1] += 1
+        else:
+            if a[x - 1] > b[x - 1]:
+                res = res * (original + 1)
+            else:
+                res *= original
+            b[x - 1] += 1
+        ans.append(res % mod)
+    print(ans)
+for _ in range(int(input())):
+    solve()

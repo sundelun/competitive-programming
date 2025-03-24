@@ -33,25 +33,7 @@ class FenwickTree:
 """
  
 def solve():
-    n = int(input())
-    record = []
-    cnt = [0] * (2 * n + 1)
-    cnt2 = [0] * (2 * n + 1)
-    for _ in range(n):
-        l, r = map(int, input().split())
-        record.append([l, r])
-        if l == r: 
-            cnt[l] = 1
-            cnt2[l] += 1
-    ans = []
-    prefix = list(accumulate(cnt, initial = 0))
-    for x, y in record:
-        if x == y:
-            if cnt2[x] > 1: ans.append('0')
-            else: ans.append('1')
-        else:
-            if prefix[y + 1] - prefix[x] == y - x + 1: ans.append('0')
-            else: ans.append('1')
-    print(''.join(ans))
-for _ in range(int(input())):
-    solve()
+    x, y = map(int, input().split())
+    print(6 - x - y)
+#for _ in range(int(input())):
+solve()
