@@ -33,23 +33,27 @@ class FenwickTree:
 """
  
 def solve():
-    x, y = map(int, input().split())
-    # (x + k) + (y + k) = (x + k) xor (y + k) is equivalant to (x + k) and (y + k) = 0
-    # a number that is a power of 2 does not share any digits with number that is less than him
-    # if x == y then no possible k value
-    if x == y:
-        print(-1)
-        return
-    if x & y == 0:
-        print(0)
-        return
-    # to make x < y
-    if x > y:
-        x, y = y, x
-    st = 1
-    while st <= y:
-        st <<= 1
-    # the answer to k is 2 ** n - max(x, y)
-    print(st - y)
-for _ in range(int(input())):
-    solve()
+    n = int(input())
+    arr = [int(x) for x in input().split()]
+    f = [[0] * 2 for _ in range(n)]
+    # f[i][0] represents ending with a[i]'s longest increasing subarray
+    # f[i][1] represents we have changed one element that ending with a[i]'s longest increasing subarray
+    # 2 3 5 1
+    f[0][0] = f[0][1] = 1
+    ans = 1
+    for i in range(1, n):
+        if arr[i] > arr[i - 1]:
+            f[i][0] = f[i - 1][0] + 1
+            f[i][1] = f[i - 1][1] + 1
+        else:
+            # f[i][0] can only be 1
+            f[i][0] = 1
+            # by changing a[i - 1] to a very small number
+            f[i][1] = 2
+        # by changing a[i - 1] such that a[i] > a[i - 1] > a[i - 2]
+        if i > 1 and arr[i] > arr[i - 2] + 1:
+            f[i][1] = max(f[i][1], f[i - 2][0] + 2)
+        ans = max(ans, f[i][0], f[i][1], f[i - 1][0] + 1)
+    print(ans)
+#for _ in range(int(input())):
+solve()
