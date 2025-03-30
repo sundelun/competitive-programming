@@ -24,7 +24,7 @@ def solve():
         # there is another case such that we can change a[i] to a very large number so that f[i][1] = f[i - 1][0] + 1
         # but then the calculation afterwards will not work, i.e. f[i] = f[i - 1] + 1 might not be true since
         # arr[i] might not be strictly greater than arr[i - 1]
-        # therefore we can only use f[i - 1][0] + 1 tp update answer
+        # therefore we can only use f[i - 1][0] + 1 to update answer
         # update the answer with all possible cases
         ans = max(ans, f[i][0], f[i][1], f[i - 1][0] + 1)
     print(ans)
