@@ -33,8 +33,20 @@ class FenwickTree:
 """
  
 def solve():
-    n, c = map(int, input().split())
+    n = int(input())
     arr = [int(x) for x in input().split()]
-    
+    cnt_even = cnt_odd = 0
+    mx_odd = s_even = 0
+    for num in arr:
+        if num % 2:
+            cnt_odd += 1
+            mx_odd = max(mx_odd, num)
+        else:
+            cnt_even += 1
+            s_even += num
+    if cnt_even == 0 or cnt_odd == 0:
+        print(max(arr))
+        return
+    print(mx_odd + s_even)
 for _ in range(int(input())):
     solve()
