@@ -34,19 +34,36 @@ class FenwickTree:
  
 def solve():
     n = int(input())
-    arr = [int(x) for x in input().split()]
-    cnt_even = cnt_odd = 0
-    mx_odd = s_even = 0
-    for num in arr:
-        if num % 2:
-            cnt_odd += 1
-            mx_odd = max(mx_odd, num)
-        else:
-            cnt_even += 1
-            s_even += num
-    if cnt_even == 0 or cnt_odd == 0:
-        print(max(arr))
+    s = str(input())
+    # TI -> TLI -> TILI -> TILTI if there is one pair that could be operate then we can have a solution!
+    # TILII cntT = 1, cntL = 1, cntI = 3
+    # ILLL -> ITLLL -> ITILLL -> ITITLLL -> ITITILLL -> ITITITLLL
+    # LLI -> LLTI -> LLITI -> LLTITI
+    cntT = cntL = cntI = 0
+    for ch in s:
+        if ch == "T": cntT += 1
+        elif ch == "L": cntL += 1
+        else: cntI += 1
+    if cntT == cntI == cntL:
+        print(0)
         return
-    print(mx_odd + s_even)
+    mx = max(cntT, cntI, cntL)
+    if cntT == mx: mxch = "T"
+    elif cntI == mx: mxch = "I"
+    else: mxch = "L"
+    if cntT + cntI + cntL - mx == 0:
+        print(-1)
+        return
+    ans = mx * 3 - n
+    print(ans)
+    for i in range(n - 1):
+        if s[i] != s[i + 1]:
+            if s[i] == mxch:
+                for _ in range(ans):
+                    print(i + 1)
+            else:
+                for j in range(ans):
+                    print(i + j + 1)
+            return
 for _ in range(int(input())):
     solve()
