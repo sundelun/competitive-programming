@@ -15,7 +15,11 @@
 # if we make pre numebr of operations on arr[i - 1]
 # for this one, we need max(pre - p1, 0) number of operations
 # because a[i - 1] takes pre number of operations to make a[i - 1] * pow(2, pre)
-# and our intend is to make a[i] // pow(2, p1) >= a[i - 1] * pow(2, pre)
+# and our intend is to make a[i] >= a[i - 1] * pow(2, pre)
+# in this case we might have new a[i - 1] > a[i]
+# we will make a[i] *= pow(2, pre) first
+# then since they a[i] and a[i - 1] are differ by pow(2, p1), we can divide by pow(2, p1) to make
+# new a[i] as small as possible while satisfy condition of a[i] >= a[i - 1]
 # so we need a total of pre - p1 number of operations!
 # 8 2 15 -> 8 8 15
 def solve():
