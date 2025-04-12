@@ -1,3 +1,4 @@
+# https://codeforces.com/problemset/problem/446/A
 def solve():
     n = int(input())
     arr = [int(x) for x in input().split()]
