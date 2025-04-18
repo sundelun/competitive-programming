@@ -1,5 +1,7 @@
 from typing import List
 import bisect
+# https://leetcode.cn/problems/count-the-number-of-fair-pairs/
+# same question as codeforced div3 round 995 D: https://codeforces.com/contest/2051/problem/D
 class Solution:
     def countFairPairs(self, nums: List[int], lower: int, upper: int) -> int:
         # order does not matter because it is just reqreuing two numbers
