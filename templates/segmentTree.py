@@ -1,6 +1,6 @@
 #代码来自0x3f，灵茶山艾府
 class FenwickTree:
-    def __init__(self, n: int) -> None:
+    def __init__(self, n: int):
         self.n = n
         self.fw = [0] * (n + 1) # by using index(1-indexed) from 1 to n
         pw = 1
@@ -10,7 +10,7 @@ class FenwickTree:
         self._top = pw >> 1 # highest power of two ≤ n
 
     # a[i](0-indexd for input-parameter) add delta, O(logN)
-    def update(self, i: int, delta: int):
+    def update(self, i: int, delta: int) -> None:
         # changed to 1-indexed
         i += 1
         while i <= self.n:
