@@ -1,4 +1,4 @@
-# https://leetcode.cn/problems/count-partitions-with-max-min-difference-at-most-k/description/
+# https://leetcode.cn/problems/count-partitions-with-max-min-difference-at-most-k/description/   
 from typing import List
 from collections import deque
 class Solution:
